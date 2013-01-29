@@ -1,0 +1,8 @@
+main: me.ase34.citylanterns.CityLanterns
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+author: ase34
+commands:
+  selectlanterns:
+    aliases: cl
