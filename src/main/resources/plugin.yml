@@ -5,4 +5,9 @@ description: ${project.description}
 author: ase34
 commands:
   selectlanterns:
-    aliases: cl
+    aliases: sl
+    permission: citylanterns.sl
+permissions:
+  citylanterns.sl:
+    default: op
+  
