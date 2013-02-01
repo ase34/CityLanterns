@@ -7,7 +7,12 @@ commands:
   selectlanterns:
     aliases: sl
     permission: citylanterns.sl
+    description: Toggles the lantern-selection-mode.
 permissions:
   citylanterns.sl:
     default: op
+    description: Allows to use the /sl command.
+  citylanterns.*:
+    default: false
+    description: Allows to use all CityLanterns commands.
   
