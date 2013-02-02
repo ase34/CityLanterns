@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import me.ase34.citylanterns.executor.SelectLanternExecutor;
+import me.ase34.citylanterns.listener.LanternRedstoneListener;
 import me.ase34.citylanterns.listener.LanternSelectListener;
 import me.ase34.citylanterns.runnable.LanternUpdateThread;
 import me.ase34.citylanterns.storage.LanternFileStorage;

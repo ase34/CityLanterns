@@ -1,4 +1,6 @@
-package me.ase34.citylanterns;
+package me.ase34.citylanterns.listener;
+
+import me.ase34.citylanterns.CityLanterns;
 
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
