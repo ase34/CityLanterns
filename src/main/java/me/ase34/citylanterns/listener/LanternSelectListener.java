@@ -27,7 +27,7 @@ public class LanternSelectListener implements Listener {
             if (ev.getClickedBlock() == null) {
                 return;
             }
-            if (ev.getClickedBlock().getType() != Material.REDSTONE_LAMP_OFF) {
+            if (ev.getClickedBlock().getType() != Material.REDSTONE_LAMP_OFF && ev.getClickedBlock().getType() != Material.REDSTONE_LAMP_ON) {
                 ev.getPlayer().sendMessage(ChatColor.GOLD + "This is not a redstone lamp!");
                 return;
             }
