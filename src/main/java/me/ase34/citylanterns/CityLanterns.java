@@ -1,6 +1,7 @@
 package me.ase34.citylanterns;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,6 +15,7 @@ import me.ase34.citylanterns.storage.LanternStorage;
 
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 public class CityLanterns extends JavaPlugin {
 
@@ -46,6 +48,12 @@ public class CityLanterns extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternUpdateThread(this), 0, 1);
+            try {
+                Metrics metrics = new Metrics(this);
+                metrics.start();
+            } catch (IOException e) {
+                getServer().getLogger().log(Level.WARNING, "Submitting plugin metrics failed: ", e);
+            }
         
         } catch (Exception e) {
             getLogger().log(Level.SEVERE, "An Exception occured! Aborting plugin start.", e);
