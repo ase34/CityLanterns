@@ -39,6 +39,7 @@ public class CityLanterns extends JavaPlugin {
         try {
             
             getDataFolder().mkdir();
+            saveDefaultConfig();
             File storageFile = new File(getDataFolder(), "storage.txt");
             storageFile.createNewFile();
             storage = new LanternFileStorage(storageFile);
