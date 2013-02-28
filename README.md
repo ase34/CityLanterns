@@ -3,7 +3,7 @@ CityLanterns
 
 This [Bukkit](http://bukkit.org/) plugin simply switches on selected redstone lamps on if it's night, and switches them off at day.
 
-Please remember that this version may still contain some bugs. ;) If you found any please report them to the [issue tracker](https://github.com/ase34/CityLanterns/issues).
+Please remember that this version may still contain some bugs. ;) If you found any please report them via a PM on Bukkit.org or dev.bukkit.org.
 
 
 Building
