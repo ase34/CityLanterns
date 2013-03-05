@@ -19,7 +19,9 @@ public class LanternRedstoneListener implements Listener {
     public void onRedstoneChange(BlockRedstoneEvent ev) {
         Location loc = ev.getBlock().getLocation();
         if (plugin.getLanterns().contains(loc)) {
-            if (loc.getWorld().getTime() % 24000 >= plugin.getConfig().getLong("night_time")) {
+            if (loc.getWorld().isThundering() && plugin.getConfig().getBoolean("lamps_on_thundering")) {
+                ev.setNewCurrent(15); 
+            } else if (loc.getWorld().getTime() % 24000 >= plugin.getConfig().getLong("night_time")) {
                 ev.setNewCurrent(15);                
             } else if (loc.getWorld().getTime() % 24000 >= plugin.getConfig().getLong("day_time")) {
                 ev.setNewCurrent(0); 

@@ -27,7 +27,7 @@ public class LanternUpdateThread implements Runnable {
                 continue;
             }
             
-            if (loc.getWorld().isThundering() == plugin.getConfig().getBoolean("lamps_on_thundering")) {
+            if (loc.getWorld().isThundering() && plugin.getConfig().getBoolean("lamps_on_thundering")) {
                 if (loc.getBlock().getType() != LAMP_ON) {
                     loc.getBlock().setType(LAMP_ON);
                 }
