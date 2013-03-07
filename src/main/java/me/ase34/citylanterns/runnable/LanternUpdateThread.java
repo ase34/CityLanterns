@@ -1,5 +1,6 @@
 package me.ase34.citylanterns.runnable;
 
+import me.ase34.citylanterns.BlockUpdateAction;
 import me.ase34.citylanterns.CityLanterns;
 
 import org.bukkit.Location;
@@ -27,17 +28,20 @@ public class LanternUpdateThread implements Runnable {
                 continue;
             }
             
+            boolean setOn = plugin.getBlockUpdateQueue().contains(new BlockUpdateAction(loc, LAMP_ON));
+            boolean setOff = plugin.getBlockUpdateQueue().contains(new BlockUpdateAction(loc, LAMP_OFF));
+            
             if (loc.getWorld().isThundering() && plugin.getConfig().getBoolean("lamps_on_thundering")) {
-                if (loc.getBlock().getType() != LAMP_ON) {
-                    loc.getBlock().setType(LAMP_ON);
+                if (loc.getBlock().getType() != LAMP_ON && !setOn) {
+                    plugin.getBlockUpdateQueue().offer(new BlockUpdateAction(loc, LAMP_ON));
                 }
             } else if (loc.getWorld().getTime() % 24000 >= plugin.getConfig().getLong("night_time")) {
-                if (loc.getBlock().getType() != LAMP_ON) {
-                    loc.getBlock().setType(LAMP_ON);
+                if (loc.getBlock().getType() != LAMP_ON && !setOn) {
+                    plugin.getBlockUpdateQueue().offer(new BlockUpdateAction(loc, LAMP_ON));
                 }
             } else if (loc.getWorld().getTime() % 24000 >= plugin.getConfig().getLong("day_time")) {
-                if (loc.getBlock().getType() != LAMP_OFF) {
-                    loc.getBlock().setType(LAMP_OFF);
+                if (loc.getBlock().getType() != LAMP_OFF && !setOff) {
+                    plugin.getBlockUpdateQueue().offer(new BlockUpdateAction(loc, LAMP_OFF));
                 }
             }
         }

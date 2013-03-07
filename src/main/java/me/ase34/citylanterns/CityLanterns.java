@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 
 import me.ase34.citylanterns.executor.SelectLanternExecutor;
 import me.ase34.citylanterns.listener.LanternRedstoneListener;
 import me.ase34.citylanterns.listener.LanternSelectListener;
+import me.ase34.citylanterns.runnable.LanternBlockUpdateActionThread;
 import me.ase34.citylanterns.runnable.LanternUpdateThread;
 import me.ase34.citylanterns.storage.LanternFileStorage;
 import me.ase34.citylanterns.storage.LanternStorage;
@@ -22,6 +24,7 @@ public class CityLanterns extends JavaPlugin {
     private List<String> selectingPlayers;
     private List<Location> lanterns;
     private LanternStorage storage;
+    private ConcurrentLinkedQueue<BlockUpdateAction> blockUpdateQueue;
 
     @Override
     public void onDisable() {
@@ -45,10 +48,12 @@ public class CityLanterns extends JavaPlugin {
             storage = new LanternFileStorage(storageFile);
             lanterns = storage.load();
             selectingPlayers = new ArrayList<String>();
+            blockUpdateQueue = new ConcurrentLinkedQueue<BlockUpdateAction>();
             getCommand("selectlanterns").setExecutor(new SelectLanternExecutor(this));
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternUpdateThread(this), 0, 1);
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternBlockUpdateActionThread(this), 0, 20);
             try {
                 Metrics metrics = new Metrics(this);
                 metrics.start();
@@ -71,6 +76,10 @@ public class CityLanterns extends JavaPlugin {
 
     public List<Location> getLanterns() {
         return lanterns;
+    }
+
+    public ConcurrentLinkedQueue<BlockUpdateAction> getBlockUpdateQueue() {
+        return blockUpdateQueue;
     }
 
 }
