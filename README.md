@@ -35,3 +35,4 @@ After 23999 ticks the counter will be reset to 0 and start counting up again.
     night_time: 12000 			# Time (in ticks) when lanterns will toggle on
     day_time: 0 				# Time (in ticks) when lanterns will toggle off
     lamps_on_thundering: true	# Should redstone lamps toggle on while it's thundering/raining?
+	toggle_delay: 10			# Delay of toggling the lanterns to prevent lags, in ticks (1 second = 20 ticks)  

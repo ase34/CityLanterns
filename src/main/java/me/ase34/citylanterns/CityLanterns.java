@@ -53,7 +53,7 @@ public class CityLanterns extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternUpdateThread(this), 0, 1);
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternBlockUpdateActionThread(this), 0, 20);
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternBlockUpdateActionThread(this), 0, getConfig().getInt("toggle_delay"));
             try {
                 Metrics metrics = new Metrics(this);
                 metrics.start();

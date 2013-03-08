@@ -2,3 +2,4 @@
 night_time: 12000
 day_time: 0
 lamps_on_thundering: true
+toggle_delay: 10
