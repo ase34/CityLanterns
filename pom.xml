@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.ase34</groupId>
   <artifactId>citylanterns</artifactId>
-  <version>1.5</version>
+  <version>1.6</version>
   <name>CityLanterns</name>
   <description>This Bukkit plugin deactivates selected redstone lamps at day and will re-activate them at night.</description>
 
@@ -21,7 +21,7 @@
     <dependency>
     	<groupId>org.bukkit</groupId>
     	<artifactId>bukkit</artifactId>
-    	<version>1.4.7-R1.0</version>
+    	<version>1.5.1-R0.1</version>
     </dependency>
     <dependency>
         <groupId>org.mcstats.bukkit</groupId>
@@ -59,8 +59,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.0.2</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.6</source>
+          <target>1.6</target>
         </configuration>
       </plugin>
     </plugins>
