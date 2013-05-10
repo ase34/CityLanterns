@@ -21,7 +21,7 @@
     <dependency>
     	<groupId>org.bukkit</groupId>
     	<artifactId>bukkit</artifactId>
-    	<version>1.5.1-R0.1</version>
+    	<version>1.5.2-R0.1</version>
     </dependency>
     <dependency>
         <groupId>org.mcstats.bukkit</groupId>
@@ -74,8 +74,6 @@
             </manifest>
             <manifestEntries>
               <Built-By>ase34</Built-By>
-              <Manifest-Version>1.0</Manifest-Version>
-              <Build-Jdk>${java.version}</Build-Jdk>
             </manifestEntries>
           </archive>
         </configuration>
