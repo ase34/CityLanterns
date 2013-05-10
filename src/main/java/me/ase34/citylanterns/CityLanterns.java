@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.PriorityQueue;
 import java.util.logging.Level;
 
 import me.ase34.citylanterns.executor.SelectLanternExecutor;
@@ -24,7 +24,7 @@ public class CityLanterns extends JavaPlugin {
     private List<String> selectingPlayers;
     private List<Location> lanterns;
     private LanternStorage storage;
-    private ConcurrentLinkedQueue<BlockUpdateAction> blockUpdateQueue;
+    private PriorityQueue<BlockUpdateAction> blockUpdateQueue;
 
     @Override
     public void onDisable() {
@@ -48,7 +48,7 @@ public class CityLanterns extends JavaPlugin {
             storage = new LanternFileStorage(storageFile);
             lanterns = storage.load();
             selectingPlayers = new ArrayList<String>();
-            blockUpdateQueue = new ConcurrentLinkedQueue<BlockUpdateAction>();
+            blockUpdateQueue = new PriorityQueue<BlockUpdateAction>(Math.max(lanterns.size(), 1), new LanternToPlayerDistanceComparator());
             getCommand("selectlanterns").setExecutor(new SelectLanternExecutor(this));
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
@@ -78,7 +78,7 @@ public class CityLanterns extends JavaPlugin {
         return lanterns;
     }
 
-    public ConcurrentLinkedQueue<BlockUpdateAction> getBlockUpdateQueue() {
+    public PriorityQueue<BlockUpdateAction> getBlockUpdateQueue() {
         return blockUpdateQueue;
     }
 
