@@ -15,8 +15,13 @@ public class LanternToPlayerDistanceComparator implements Comparator<BlockUpdate
 		double distance2 = 0;
 		
 		for (Player player: action1.getBlockLocation().getWorld().getPlayers()) {
-			distance1 += player.getLocation().distanceSquared(action1.getBlockLocation());
-			distance2 += player.getLocation().distanceSquared(action2.getBlockLocation());
+			if (distance1 == 0)
+				distance1 = player.getLocation().distanceSquared(action1.getBlockLocation());
+			if (distance2 == 0)
+				distance2 = player.getLocation().distanceSquared(action2.getBlockLocation());
+			
+			distance1 = Math.min(player.getLocation().distanceSquared(action1.getBlockLocation()), distance1);
+			distance2 = Math.min(player.getLocation().distanceSquared(action2.getBlockLocation()), distance2);
 		}
 		
 		return (int) (distance1 - distance2);
