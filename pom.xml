@@ -63,21 +63,6 @@
           <target>1.6</target>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>false</addClasspath>
-            </manifest>
-            <manifestEntries>
-              <Built-By>ase34</Built-By>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
     </plugins>
     <finalName>${project.name}-${version}</finalName>
     <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
