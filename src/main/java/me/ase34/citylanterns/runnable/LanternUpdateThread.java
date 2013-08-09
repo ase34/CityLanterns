@@ -5,6 +5,7 @@ import me.ase34.citylanterns.CityLanterns;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 
 public class LanternUpdateThread implements Runnable {
 
@@ -21,30 +22,35 @@ public class LanternUpdateThread implements Runnable {
     public void run() {
         for (int i = 0; i < plugin.getLanterns().size(); i++) {
             Location loc = plugin.getLanterns().get(i);
-            if (loc.getBlock().getType() != LAMP_ON
-                    && loc.getBlock().getType() != LAMP_OFF) {
+            Block block = loc.getBlock();
+            if (block.getType() != LAMP_ON && block.getType() != LAMP_OFF) {
                 plugin.getLanterns().remove(i);
+                plugin.getBlockUpdateQueue().remove(new BlockUpdateAction(loc, LAMP_ON));
+                plugin.getBlockUpdateQueue().remove(new BlockUpdateAction(loc, LAMP_OFF));
                 i--;
                 continue;
             }
             
-            boolean setOn = plugin.getBlockUpdateQueue().contains(new BlockUpdateAction(loc, LAMP_ON));
-            boolean setOff = plugin.getBlockUpdateQueue().contains(new BlockUpdateAction(loc, LAMP_OFF));
-            
             if (loc.getWorld().isThundering() && plugin.getConfig().getBoolean("lamps_on_thundering")) {
-                if (loc.getBlock().getType() != LAMP_ON && !setOn) {
-                    plugin.getBlockUpdateQueue().offer(new BlockUpdateAction(loc, LAMP_ON));
-                }
+                addUpdateAction(block, true);
             } else if (loc.getWorld().getTime() % 24000 >= plugin.getConfig().getLong("night_time")) {
-                if (loc.getBlock().getType() != LAMP_ON && !setOn) {
-                    plugin.getBlockUpdateQueue().offer(new BlockUpdateAction(loc, LAMP_ON));
-                }
+                addUpdateAction(block, true);
             } else if (loc.getWorld().getTime() % 24000 >= plugin.getConfig().getLong("day_time")) {
-                if (loc.getBlock().getType() != LAMP_OFF && !setOff) {
-                    plugin.getBlockUpdateQueue().offer(new BlockUpdateAction(loc, LAMP_OFF));
-                }
+                addUpdateAction(block, false);
             }
         }
+    }
+    
+    private void addUpdateAction(Block block, boolean state) {
+    	Material type = state ? LAMP_ON : LAMP_OFF;
+    	
+    	if (plugin.getBlockUpdateQueue().contains(new BlockUpdateAction(block.getLocation(), type))) {
+    		return;
+    	}
+    	
+    	if (block.getType() != type) {
+    		plugin.getBlockUpdateQueue().offer(new BlockUpdateAction(block.getLocation(), type));
+    	}
     }
 
 }
