@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import me.ase34.citylanterns.executor.SelectLanternExecutor;
 import me.ase34.citylanterns.listener.LanternRedstoneListener;
 import me.ase34.citylanterns.listener.LanternSelectListener;
+import me.ase34.citylanterns.listener.WorldListener;
 import me.ase34.citylanterns.runnable.LanternBlockUpdateActionThread;
 import me.ase34.citylanterns.runnable.LanternUpdateThread;
 import me.ase34.citylanterns.storage.LanternFileStorage;
@@ -40,7 +41,6 @@ public class CityLanterns extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
-            
             getDataFolder().mkdir();
             saveDefaultConfig();
             File storageFile = new File(getDataFolder(), "storage.txt");
@@ -52,6 +52,7 @@ public class CityLanterns extends JavaPlugin {
             getCommand("selectlanterns").setExecutor(new SelectLanternExecutor(this));
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
+            getServer().getPluginManager().registerEvents(new WorldListener(this), this);
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternUpdateThread(this), 0, 1);
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternBlockUpdateActionThread(this), 0, getConfig().getInt("toggle_delay"));
             try {
@@ -60,14 +61,11 @@ public class CityLanterns extends JavaPlugin {
             } catch (IOException e) {
                 getServer().getLogger().log(Level.WARNING, "Submitting plugin metrics failed: ", e);
             }
-        
+            
+            getLogger().info(getDescription().getFullName() + " by " + getDescription().getAuthors().get(0) + " enabled!");
         } catch (Exception e) {
-            getLogger().log(Level.SEVERE, "An Exception occured! Aborting plugin start.", e);
-            this.getServer().getPluginManager().disablePlugin(this);
-            return;
+            throw new RuntimeException(e);
         }
-        
-        getLogger().info(getDescription().getFullName() + " by " + getDescription().getAuthors().get(0) + " enabled!");
     }
 
     public List<String> getSelectingPlayers() {
@@ -80,6 +78,10 @@ public class CityLanterns extends JavaPlugin {
 
     public PriorityQueue<BlockUpdateAction> getBlockUpdateQueue() {
         return blockUpdateQueue;
+    }
+
+    public void reloadLanterns() throws Exception {
+        lanterns = storage.load();
     }
 
 }

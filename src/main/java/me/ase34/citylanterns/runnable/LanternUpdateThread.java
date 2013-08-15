@@ -22,6 +22,10 @@ public class LanternUpdateThread implements Runnable {
     public void run() {
         for (int i = 0; i < plugin.getLanterns().size(); i++) {
             Location loc = plugin.getLanterns().get(i);
+            if (loc.getWorld() == null) {
+                continue;
+            }
+            
             Block block = loc.getBlock();
             if (block.getType() != LAMP_ON && block.getType() != LAMP_OFF) {
                 plugin.getLanterns().remove(i);
