@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 
+import me.ase34.citylanterns.executor.GetLanternSettingsExecutor;
 import me.ase34.citylanterns.executor.SelectLanternExecutor;
+import me.ase34.citylanterns.executor.SetLanternSettingsExecutor;
 import me.ase34.citylanterns.listener.LanternRedstoneListener;
 import me.ase34.citylanterns.listener.LanternSelectListener;
 import me.ase34.citylanterns.listener.WorldListener;
@@ -16,14 +18,13 @@ import me.ase34.citylanterns.runnable.LanternUpdateThread;
 import me.ase34.citylanterns.storage.LanternFileStorage;
 import me.ase34.citylanterns.storage.LanternStorage;
 
-import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
 public class CityLanterns extends JavaPlugin {
 
-    private List<String> selectingPlayers;
-    private List<Location> lanterns;
+    private List<SelectingPlayer> selectingPlayers;
+    private List<Lantern> lanterns;
     private LanternStorage storage;
     private PriorityQueue<BlockUpdateAction> blockUpdateQueue;
 
@@ -47,9 +48,11 @@ public class CityLanterns extends JavaPlugin {
             storageFile.createNewFile();
             storage = new LanternFileStorage(storageFile);
             lanterns = storage.load();
-            selectingPlayers = new ArrayList<String>();
+            selectingPlayers = new ArrayList<SelectingPlayer>();
             blockUpdateQueue = new PriorityQueue<BlockUpdateAction>(Math.max(lanterns.size(), 1), new LanternToPlayerDistanceComparator());
             getCommand("selectlanterns").setExecutor(new SelectLanternExecutor(this));
+            getCommand("setlanternsettings").setExecutor(new SetLanternSettingsExecutor(this));
+            getCommand("getlanternsettings").setExecutor(new GetLanternSettingsExecutor(this));
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
             getServer().getPluginManager().registerEvents(new WorldListener(this), this);
@@ -68,11 +71,11 @@ public class CityLanterns extends JavaPlugin {
         }
     }
 
-    public List<String> getSelectingPlayers() {
+    public List<SelectingPlayer> getSelectingPlayers() {
         return selectingPlayers;
     }
 
-    public List<Location> getLanterns() {
+    public List<Lantern> getLanterns() {
         return lanterns;
     }
 

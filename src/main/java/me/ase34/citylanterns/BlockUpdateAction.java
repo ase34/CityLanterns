@@ -21,6 +21,10 @@ public class BlockUpdateAction {
     public Material getNewBlockMaterial() {
         return newBlockMaterial;
     }
+    
+    public void execute() {
+        blockLocation.getBlock().setType(newBlockMaterial);
+    }
 
     @Override
     public boolean equals(Object o) {

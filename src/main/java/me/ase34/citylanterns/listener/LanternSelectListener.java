@@ -1,9 +1,10 @@
 package me.ase34.citylanterns.listener;
 
 import me.ase34.citylanterns.CityLanterns;
+import me.ase34.citylanterns.Lantern;
+import me.ase34.citylanterns.SelectingPlayer;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +24,16 @@ public class LanternSelectListener implements Listener {
         if (ev.isBlockInHand()) {
             return;
         }
-        if (plugin.getSelectingPlayers().contains(ev.getPlayer().getName())) {
+        
+        SelectingPlayer player = null;
+        for (SelectingPlayer selPlayer: plugin.getSelectingPlayers()) {
+            if (selPlayer.getPlayerName().equals(ev.getPlayer().getName())) {
+                player = selPlayer;
+                break;
+            }
+        }
+        
+        if (player != null) {
             if (ev.getClickedBlock() == null) {
                 return;
             }
@@ -31,13 +41,16 @@ public class LanternSelectListener implements Listener {
                 ev.getPlayer().sendMessage(ChatColor.GOLD + "This is not a redstone lamp!");
                 return;
             }
-            Location loc = ev.getClickedBlock().getLocation();
-            if (plugin.getLanterns().contains(loc)) {
-                plugin.getLanterns().remove(loc);
-                ev.getPlayer().sendMessage(ChatColor.GOLD + "Removed this lantern!");
+            
+            Lantern lantern = new Lantern(ev.getClickedBlock().getLocation(), player.getGroup());
+            if (plugin.getLanterns().contains(lantern)) {
+                plugin.getLanterns().remove(lantern);
+                ev.getPlayer().sendMessage(ChatColor.GOLD + "Removed this lantern from group "
+                        + ChatColor.GRAY + player.getGroup() + ChatColor.GOLD + "!");
             } else {
-                plugin.getLanterns().add(loc);
-                ev.getPlayer().sendMessage(ChatColor.GOLD + "Added this lantern!");
+                plugin.getLanterns().add(lantern);
+                ev.getPlayer().sendMessage(ChatColor.GOLD + "Added this lantern to group "
+                        + ChatColor.GRAY + player.getGroup() + ChatColor.GOLD + "!");
             }
             ev.setCancelled(true);
         }

@@ -1,6 +1,7 @@
 package me.ase34.citylanterns.executor;
 
 import me.ase34.citylanterns.CityLanterns;
+import me.ase34.citylanterns.SelectingPlayer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -23,14 +24,34 @@ public class SelectLanternExecutor implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        if (plugin.getSelectingPlayers().contains(player.getName())) {
-            plugin.getSelectingPlayers().remove(player.getName());
-            player.sendMessage(ChatColor.GOLD + "You left the lantern-selection-mode!");
+        SelectingPlayer selPlayer;
+        
+        if (args.length > 0) {
+            removePlayer(player);
+            selPlayer = new SelectingPlayer(player, args[0]);
         } else {
-            plugin.getSelectingPlayers().add(player.getName());
-            player.sendMessage(ChatColor.GOLD + "You entered the lantern-selection-mode!");
+            if (removePlayer(player)) {
+                player.sendMessage(ChatColor.GOLD + "You left the lantern-selection-mode!");
+                return true;
+            } else {
+                selPlayer = new SelectingPlayer(player);
+            }
         }
+        
+        plugin.getSelectingPlayers().add(selPlayer);
+        player.sendMessage(ChatColor.GOLD + "You entered the lantern-selection-mode for the group " 
+                + ChatColor.GRAY + selPlayer.getGroup() + ChatColor.GOLD + "!");
         return true;
+    }
+    
+    private boolean removePlayer(Player player) {
+        for (SelectingPlayer selPlayer: plugin.getSelectingPlayers()) {
+            if (selPlayer.getPlayerName().equals(player.getName())) {
+                plugin.getSelectingPlayers().remove(selPlayer);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

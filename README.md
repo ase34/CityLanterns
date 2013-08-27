@@ -17,7 +17,9 @@ Commands & Permissions
 
 The following commands are available:
 
-* /selectlanterns, /sl - Toggles the lantern-selection-mode - `citylanterns.sl`
+* `/selectlanterns|sl [group]` - Toggles the lantern-selection-mode - `citylanterns.sl`
+* `/setlanternsettings|sls [group] on|off|thunder now|<time>|true|false` - Sets settings of the lantern groups - `citylanterns.sls`
+* `/getlanternsettings|gls [group]` - Gets all settings of the lantern groups - `citylanterns.gls`
 
 Configuration
 -------------
@@ -32,7 +34,40 @@ Times:
 
 After 23999 ticks the counter will be reset to 0 and start counting up again.
 
-    night_time: 12000 			# Time (in ticks) when lanterns will toggle on
-    day_time: 0 				# Time (in ticks) when lanterns will toggle off
-    lamps_on_thundering: true	# Should redstone lamps toggle on while it's thundering/raining?
-	toggle_delay: 10			# Delay of toggling the lanterns to prevent lags, in ticks (1 second = 20 ticks)  
+```
+night_time: 12000 			# Default time (in ticks) for groups when lanterns will toggle on
+day_time: 0 				# Default time (in ticks) for groups when lanterns will toggle off
+lamps_on_thundering: true	# Should redstone lamps toggle on while it's thundering/raining by default?
+toggle_delay: 10			# Delay of toggling the lanterns to prevent lags, in ticks (1 second = 20 ticks)  
+```
+
+File Format
+-----------
+
+Lantern locations in the worlds are saved in `storage.txt`, found in the plugin folder. 
+*[LanternFileStorage#save()](https://github.com/ase34/CityLanterns/blob/master/src/main/java/me/ase34/citylanterns/storage/LanternFileStorage.java#L32)* 
+will fill the file with the following structure (applies to v1.9):
+
+<ol>
+<li>The magic number <code>0x43 0x4C 0x31</code> (3 bytes, ASCII <em>CL1</em>)</li>
+<li>For each group of lanterns:
+<ol>
+<li>The bytes of the group's name representation by Java's <em><a href="http://docs.oracle.com/javase/1.4.2/docs/api/java/io/DataOutput.html#writeUTF(java.lang.String)">writeUTF</a></em> method</li>
+<li>The count of different worlds in the list of lanterns (4 bytes)</li>
+<li>For each world in the group:
+<ol>
+<li>The UUID of the world, first <em><a href="http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html#getMostSignificantBits()">getMostSignificantBits</a></em>, 
+then <em><a href="http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html#getLeastSignificantBits()">getLeastSignificantBits</a></em>. (16 bytes in total)</li>
+<li>The count of lanterns in that world (4 bytes)</li>
+<li>For each location of lanterns in that world:
+<ol>
+<li>The X-Coordinate (4 bytes)</li>
+<li>The Y-Coordinate (4 bytes)</li>
+<li>The Z-Coordinate (4 bytes)</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>

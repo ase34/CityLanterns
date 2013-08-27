@@ -8,10 +8,27 @@ commands:
     aliases: sl
     permission: citylanterns.sl
     description: Toggles the lantern-selection-mode.
+    usage: /<command> [group]
+  getlanternsettings:
+    aliases: gls
+    permission: citylanterns.gls
+    description: Gets settings about the lantern group.
+    usage: /<command> [group]
+  setlanternsettings:
+    aliases: sls
+    permission: citylanterns.sls
+    description: Sets the time when lanterns should toggle on/off and whether lanterns should toggle on while thundering.
+    usage: /<command> [group] on|off now|<time> OR /<command> [group] thunder true|false
 permissions:
   citylanterns.sl:
     default: op
     description: Allows to use the /sl command.
+  citylanterns.gls:
+    default: op
+    description: Allows to use the /gls command.
+  citylanterns.sls:
+    default: op
+    description: Allows to use the /sls command.    
   citylanterns.*:
     default: false
     description: Allows to use all CityLanterns commands.

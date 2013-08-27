@@ -1,6 +1,7 @@
 package me.ase34.citylanterns.listener;
 
 import me.ase34.citylanterns.CityLanterns;
+import me.ase34.citylanterns.Lantern;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,11 +23,13 @@ public class LanternRedstoneListener implements Listener {
     @EventHandler
     public void onRedstoneChange(BlockRedstoneEvent ev) {
         Location loc = ev.getBlock().getLocation();
-        if (plugin.getLanterns().contains(loc)) {
-            if (loc.getBlock().getType() == LAMP_ON) {
-                ev.setNewCurrent(13);
-            } else if (loc.getBlock().getType() == LAMP_OFF) {
-                ev.setNewCurrent(0);
+        for (Lantern lantern: plugin.getLanterns()) {
+            if (lantern.getLocation().equals(loc)) {
+                if (loc.getBlock().getType() == LAMP_ON) {
+                    ev.setNewCurrent(13);
+                } else if (loc.getBlock().getType() == LAMP_OFF) {
+                    ev.setNewCurrent(0);
+                }
             }
         }
     }

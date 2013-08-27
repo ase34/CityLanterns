@@ -18,7 +18,7 @@ public class LanternBlockUpdateActionThread implements Runnable {
         if (action == null) {
             return;
         }
-        action.getBlockLocation().getBlock().setType(action.getNewBlockMaterial());
+        action.execute();
     }
 
 }
