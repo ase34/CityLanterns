@@ -24,7 +24,7 @@ import org.mcstats.Metrics;
 public class CityLanterns extends JavaPlugin {
 
     private List<SelectingPlayer> selectingPlayers;
-    private List<Lantern> lanterns;
+    private LocationToLanternMap lanterns;
     private LanternStorage storage;
     private PriorityQueue<BlockUpdateAction> blockUpdateQueue;
 
@@ -75,7 +75,7 @@ public class CityLanterns extends JavaPlugin {
         return selectingPlayers;
     }
 
-    public List<Lantern> getLanterns() {
+    public LocationToLanternMap getLanterns() {
         return lanterns;
     }
 

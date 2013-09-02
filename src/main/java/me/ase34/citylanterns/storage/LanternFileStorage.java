@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import me.ase34.citylanterns.Lantern;
+import me.ase34.citylanterns.LocationToLanternMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -29,7 +29,7 @@ public class LanternFileStorage implements LanternStorage {
         this.file = file;
     }
 
-    public void save(List<Lantern> lanterns) throws Exception {
+    public void save(LocationToLanternMap lanterns) throws Exception {
         FileOutputStream fos = new FileOutputStream(file);
         DataOutputStream dos = new DataOutputStream(fos);
         
@@ -81,8 +81,8 @@ public class LanternFileStorage implements LanternStorage {
         return map;
     }
 
-    public List<Lantern> load() throws Exception {
-        List<Lantern> lanterns = new ArrayList<Lantern>();
+    public LocationToLanternMap load() throws Exception {
+        LocationToLanternMap lanterns = new LocationToLanternMap();
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
         DataInputStream dis = new DataInputStream(bis);
@@ -97,10 +97,6 @@ public class LanternFileStorage implements LanternStorage {
                 skipFirst = true;
                 dis.reset();
             }
-        } else {
-            dis.close();
-            fis.close();
-            throw new IOException("Incorrect file format"); 
         }
         
         while (dis.available() > 0) {
