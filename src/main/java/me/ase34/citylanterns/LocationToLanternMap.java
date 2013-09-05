@@ -2,6 +2,8 @@ package me.ase34.citylanterns;
 
 import java.util.ArrayList;
 
+import org.bukkit.Location;
+
 @SuppressWarnings("serial")
 public class LocationToLanternMap extends ArrayList<Lantern> {
 
@@ -26,6 +28,13 @@ public class LocationToLanternMap extends ArrayList<Lantern> {
         super.add(index, element);
     }
 
-    
+    public Lantern getLantern(Location loc) {
+        for (Lantern lantern: this) {
+            if (loc.equals(lantern.getLocation())) {
+                return lantern;
+            }
+        }
+        return null;
+    }
     
 }

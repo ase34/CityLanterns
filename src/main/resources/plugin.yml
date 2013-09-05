@@ -4,21 +4,18 @@ version: ${project.version}
 description: ${project.description}
 author: ase34
 commands:
-  selectlanterns:
-    aliases: sl
-    permission: citylanterns.sl
-    description: Toggles the lantern-selection-mode.
-    usage: /<command> [group]
-  getlanternsettings:
-    aliases: gls
-    permission: citylanterns.gls
-    description: Gets settings about the lantern group.
-    usage: /<command> [group]
-  setlanternsettings:
-    aliases: sls
-    permission: citylanterns.sls
-    description: Sets the time when lanterns should toggle on/off and whether lanterns should toggle on while thundering.
-    usage: /<command> [group] on|off now|<time> OR /<command> [group] thunder true|false
+  citylanternsselect:
+    aliases: cls
+    permission: citylanterns.select
+    description: Command for selecting lanterns
+    usage: |
+        /<command> [<group> [we]]
+        <group>
+        §f  The group the lanterns will
+        §f  be added. Default is 'main'.
+        we
+        §f  Set all lanterns to <group>
+        §f  in the WorldEdit selection.
 permissions:
   citylanterns.sl:
     default: op
