@@ -3,6 +3,7 @@ name: ${project.name}
 version: ${project.version}
 description: ${project.description}
 author: ase34
+softdepend: [WorldEdit] 
 commands:
   citylanternsselect:
     aliases: cls

@@ -18,12 +18,12 @@ Commands & Permissions
 The following commands are available:
 
 <dl>
-<dt>/citylanternsselect|cls [&lt;group&lg; [we]]</dt>
+<dt>/citylanternsselect|cls [&lt;group&gt; [we]]</dt>
 <dd>
 <p>Will either give a tool for adding/removing lanterns to/from the group <code>&lt;group&gt;</code> (Will be set to 'main' if not supplied) or, if the <code>we</code> argument is given, sets the group of all lanterns to <code>&lt;group&gt;</code> in the currently selected <a href="http://dev.bukkit.org/bukkit-plugins/worldedit/">WorldEdit</a> region.</p>
 <p>Permission name is <code>citylanterns.select</code> (default for ops)</p>
 </dd>
-<dt>/citylanternsgroups|clg [&lt;group&lg;]</dt>
+<dt>/citylanternsgroups|clg [&lt;group&gt;]</dt>
 <dd>
 <p>Lists all groups or, if <code>&lt;group&gt;</code> is given, shows detailed information about that group.</p>
 <p>Permission name is <code>citylanterns.groups</code> (default for ops)</p>
