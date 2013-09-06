@@ -21,6 +21,7 @@ public class CityLanterns extends JavaPlugin {
     private LocationToLanternMap lanterns;
     private LanternStorage storage;
     private PriorityQueue<BlockUpdateAction> blockUpdateQueue;
+    private LanternsSettings settings;
 
     @Override
     public void onDisable() {
@@ -38,6 +39,7 @@ public class CityLanterns extends JavaPlugin {
         try {
             getDataFolder().mkdir();
             saveDefaultConfig();
+            settings = new LanternsSettings(this);
             File storageFile = new File(getDataFolder(), "storage.txt");
             storageFile.createNewFile();
             storage = new LanternFileStorage(storageFile);
@@ -60,6 +62,10 @@ public class CityLanterns extends JavaPlugin {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public LanternsSettings getSettings() {
+        return settings;
     }
 
     public LocationToLanternMap getLanterns() {

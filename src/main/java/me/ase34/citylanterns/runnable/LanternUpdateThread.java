@@ -7,7 +7,6 @@ import me.ase34.citylanterns.Lantern;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.ConfigurationSection;
 
 public class LanternUpdateThread implements Runnable {
 
@@ -39,21 +38,13 @@ public class LanternUpdateThread implements Runnable {
                 continue;
             }
             
-            ConfigurationSection section = plugin.getConfig()
-                    .getConfigurationSection("groups." + lantern.getGroup());
-            if (section == null) {
-                section = plugin.getConfig().createSection("groups." + lantern.getGroup());
-                section.set("lamps_on_thundering", plugin.getConfig().getBoolean("lamps_on_thundering"));
-                section.set("night_time", plugin.getConfig().getLong("night_time"));
-                section.set("day_time", plugin.getConfig().getLong("day_time"));
-                plugin.saveConfig();
-            }
+            String group = lantern.getGroup();
             
-            if (loc.getWorld().isThundering() && section.getBoolean("lamps_on_thundering")) {
+            if (loc.getWorld().isThundering() && plugin.getSettings().onThunder(group)) {
                 addUpdateAction(block, true);
-            } else if (loc.getWorld().getTime() % 24000 >= section.getLong("night_time")) {
+            } else if (loc.getWorld().getTime() % 24000 >= plugin.getSettings().getNighttime(group)) {
                 addUpdateAction(block, true);
-            } else if (loc.getWorld().getTime() % 24000 >= section.getLong("day_time")) {
+            } else if (loc.getWorld().getTime() % 24000 >= plugin.getSettings().getDaytime(group)) {
                 addUpdateAction(block, false);
             }
         }
