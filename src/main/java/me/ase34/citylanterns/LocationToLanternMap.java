@@ -1,18 +1,20 @@
 package me.ase34.citylanterns;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Location;
 
-@SuppressWarnings("serial")
-public class LocationToLanternMap extends ArrayList<Lantern> {
+public class LocationToLanternMap extends AbstractList<Lantern> {
+    
+    private ArrayList<Lantern> container = new ArrayList<Lantern>();
 
     @Override
     public Lantern set(int index, Lantern element) {
         checkInsert(index, element);
-        return super.set(index, element);
+        return container.set(index, element);
     }
 
     public void checkInsert(int index, Lantern element) {
@@ -27,7 +29,7 @@ public class LocationToLanternMap extends ArrayList<Lantern> {
     @Override
     public void add(int index, Lantern element) {
         checkInsert(index, element);
-        super.add(index, element);
+        container.add(index, element);
     }
 
     public Lantern getLantern(Location loc) {
@@ -55,6 +57,21 @@ public class LocationToLanternMap extends ArrayList<Lantern> {
             }
         }
         return set;
+    }
+
+    @Override
+    public Lantern get(int index) {
+        return container.get(index);
+    }
+
+    @Override
+    public int size() {
+        return container.size();
+    }
+
+    @Override
+    public Lantern remove(int index) {
+        return container.remove(index);
     }
     
 }
