@@ -129,7 +129,7 @@ public class SelectCommandExecutor implements CommandExecutor {
     }
     
     private ItemStack constructSelectionTool(String group) {
-        ItemStack stack = new ItemStack(Material.WOOD_AXE);
+        ItemStack stack = new ItemStack(Material.WOOD_PICKAXE);
         
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName("Lantern Selection Tool for group '" + group + "'");
