@@ -85,6 +85,9 @@ public class SelectCommandExecutor implements CommandExecutor {
                                 || block.getType() == Material.REDSTONE_LAMP_OFF) {
                             Lantern lantern = plugin.getLanterns().getLantern(loc);
                             if (lantern != null) {
+                                if (lantern.getGroup().equals(group)) {
+                                    continue;
+                                }
                                 lantern.setGroup(group);
                             } else {
                                 plugin.getLanterns().add(new Lantern(loc, group));
@@ -94,7 +97,7 @@ public class SelectCommandExecutor implements CommandExecutor {
                     }
                 }
             }
-            player.sendMessage(ChatColor.GRAY + String.valueOf(affected) + ChatColor.GOLD + " lanterns were added to group "
+            player.sendMessage(ChatColor.WHITE + String.valueOf(affected) + ChatColor.GOLD + " lanterns were added to group "
                     + ChatColor.GRAY + group + ChatColor.GOLD + "!");
         } else {
             player.sendMessage(ChatColor.RED +  "You didn't have selected anything!");
