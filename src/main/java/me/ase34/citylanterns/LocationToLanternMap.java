@@ -1,6 +1,8 @@
 package me.ase34.citylanterns;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.Location;
 
@@ -35,6 +37,24 @@ public class LocationToLanternMap extends ArrayList<Lantern> {
             }
         }
         return null;
+    }
+    
+    public Set<String> getGroups() {
+        HashSet<String> set = new HashSet<String>();
+        for (Lantern lantern: this) {
+            set.add(lantern.getGroup());
+        }
+        return set;
+    }
+    
+    public Set<Lantern> getLanterns(String group) {
+        HashSet<Lantern> set = new HashSet<Lantern>();
+        for (Lantern lantern: this) {
+            if (lantern.getGroup().equals(group)) {
+                set.add(lantern);
+            }
+        }
+        return set;
     }
     
 }

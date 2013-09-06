@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 
+import me.ase34.citylanterns.executor.GroupsCommandExecutor;
 import me.ase34.citylanterns.executor.SelectCommandExecutor;
 import me.ase34.citylanterns.listener.LanternRedstoneListener;
 import me.ase34.citylanterns.listener.LanternSelectListener;
@@ -46,6 +47,7 @@ public class CityLanterns extends JavaPlugin {
             lanterns = storage.load();
             blockUpdateQueue = new PriorityQueue<BlockUpdateAction>(Math.max(lanterns.size(), 1), new LanternToPlayerDistanceComparator());
             getCommand("citylanternsselect").setExecutor(new SelectCommandExecutor(this));
+            getCommand("citylanternsgroups").setExecutor(new GroupsCommandExecutor(this));
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
             getServer().getPluginManager().registerEvents(new WorldListener(this), this);

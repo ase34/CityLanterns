@@ -16,6 +16,17 @@ commands:
         we
         §f  Set all lanterns to <group>
         §f  in the WorldEdit selection.
+  citylanternsgroups:
+    aliases: clg
+    permission: citylanterns.groups
+    description: Command for getting group settings
+    usage: |
+        /<command> [<group>]
+        <group>
+        §f  If specified, prints deitailed
+        §f  information about that group.
+        §f  If not, a list of groups will
+        §f  be displayed.
 permissions:
   citylanterns.sl:
     default: op
