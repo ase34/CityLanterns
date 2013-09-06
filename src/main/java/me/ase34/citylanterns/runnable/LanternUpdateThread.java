@@ -40,7 +40,7 @@ public class LanternUpdateThread implements Runnable {
             
             String group = lantern.getGroup();
             
-            if (loc.getWorld().isThundering() && plugin.getSettings().onThunder(group)) {
+            if (loc.getWorld().hasStorm() && plugin.getSettings().onThunder(group)) {
                 addUpdateAction(block, true);
             } else if (loc.getWorld().getTime() % 24000 >= plugin.getSettings().getNighttime(group)) {
                 addUpdateAction(block, true);
