@@ -28,7 +28,7 @@ public class LanternSelectListener implements Listener {
     @EventHandler
     public void onPlayerInteractBlock(PlayerInteractEvent ev) {
         ItemStack tool = ev.getItem();
-        if (tool == null || !tool.hasItemMeta()) {
+        if (tool == null || !tool.hasItemMeta() || tool.getItemMeta().getDisplayName() == null) {
             return;
         }
         
