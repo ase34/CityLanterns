@@ -40,32 +40,42 @@ public class CityLanterns extends JavaPlugin {
         try {
             getDataFolder().mkdir();
             saveDefaultConfig();
+
             settings = new LanternsSettings(this);
+
             File storageFile = new File(getDataFolder(), "storage.txt");
             storageFile.createNewFile();
             storage = new LanternFileStorage(storageFile);
             lanterns = storage.load();
-            blockUpdateQueue = new PriorityQueue<BlockUpdateAction>(Math.max(lanterns.size(), 1), new LanternToPlayerDistanceComparator());
+
+            blockUpdateQueue = new PriorityQueue<BlockUpdateAction>(Math.max(lanterns.size(), 1),
+                    new LanternToPlayerDistanceComparator());
+
             getCommand("citylanternsselect").setExecutor(new SelectCommandExecutor(this));
             getCommand("citylanternsgroups").setExecutor(new GroupsCommandExecutor(this));
+
             getServer().getPluginManager().registerEvents(new LanternSelectListener(this), this);
             getServer().getPluginManager().registerEvents(new LanternRedstoneListener(this), this);
             getServer().getPluginManager().registerEvents(new WorldListener(this), this);
+
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternUpdateThread(this), 0, 1);
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternBlockUpdateActionThread(this), 0, getConfig().getInt("toggle_delay"));
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternBlockUpdateActionThread(this), 0,
+                    getConfig().getInt("toggle_delay"));
+
             try {
                 Metrics metrics = new Metrics(this);
                 metrics.start();
             } catch (IOException e) {
                 getServer().getLogger().log(Level.WARNING, "Submitting plugin metrics failed: ", e);
             }
-            
-            getLogger().info(getDescription().getFullName() + " by " + getDescription().getAuthors().get(0) + " enabled!");
+
+            getLogger().info(getDescription().getFullName() + " by " + getDescription().getAuthors().get(0)
+                    + " enabled!");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    
+
     public LanternsSettings getSettings() {
         return settings;
     }
