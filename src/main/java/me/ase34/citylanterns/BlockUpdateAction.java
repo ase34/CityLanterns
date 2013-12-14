@@ -2,6 +2,7 @@ package me.ase34.citylanterns;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
 
 public class BlockUpdateAction {
 
@@ -24,6 +25,8 @@ public class BlockUpdateAction {
     
     public void execute() {
         blockLocation.getBlock().setType(newBlockMaterial);
+        net.minecraft.server.v1_7_R1.World w = ((CraftWorld) blockLocation.getWorld()).getHandle();
+        w.t(blockLocation.getBlockX(), blockLocation.getBlockY(), blockLocation.getBlockZ());
     }
 
     @Override
