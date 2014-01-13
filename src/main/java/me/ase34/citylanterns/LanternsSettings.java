@@ -26,6 +26,21 @@ public class LanternsSettings {
     public boolean onThunder(String group) {
         return getSection(group).getBoolean("lamps_on_thundering");
     }
+    
+    public void setDaytime(String group, long daytime) {
+        getSection(group).set("day_time", daytime);
+        plugin.saveConfig();
+    }
+    
+    public void setNighttime(String group, long daytime) {
+        getSection(group).set("night_time", daytime);
+        plugin.saveConfig();
+    }
+    
+    public void setThunder(String group, boolean thunder) {
+        getSection(group).set("lamps_on_thundering", thunder);
+        plugin.saveConfig();
+    }
 
     private ConfigurationSection getSection(String group) {
         Configuration config = getConfig();

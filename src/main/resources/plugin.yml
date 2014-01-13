@@ -11,23 +11,25 @@ commands:
     description: Command for selecting lanterns
     usage: |
         /<command> [<group> [we]]
-        <group>
-        §f  The group the lanterns will
-        §f  be added. Default is 'main'.
-        we
-        §f  Set all lanterns to <group>
-        §f  in the WorldEdit selection.
+        <group> - The group the lanterns will be added. Default is 'main'.
+        §f 
+        we - Set all lanterns to <group> in the WorldEdit selection.
   citylanternsgroups:
     aliases: clg
     permission: citylanterns.groups
     description: Command for getting group settings
     usage: |
         /<command> [<group>]
-        <group>
-        §f  If specified, prints deitailed
-        §f  information about that group.
-        §f  If not, a list of groups will
-        §f  be displayed.
+        <group> - If specified, prints deitailed information about that group. If not, a list of groups will be displayed.
+  citylanternssettings:
+    aliases: cls
+    permission: citylanters.settings
+    description: Command for setting group settings and settings in general
+    usage: |
+        /<command> [<group>] day|night|thunder <value>
+        <group> - The group the lanterns will be added. Default is 'main'.
+        §f 
+        <value> - If 'day' or 'night' then a number is expected, if 'thunder' then either 'true' or 'false' is expected. 
 permissions:
   citylanterns.select:
     default: op
