@@ -22,7 +22,7 @@ commands:
         /<command> [<group>]
         <group> - If specified, prints deitailed information about that group. If not, a list of groups will be displayed.
   citylanternssettings:
-    aliases: cls
+    aliases: clsettings
     permission: citylanters.settings
     description: Command for setting group settings and settings in general
     usage: |
