@@ -46,7 +46,7 @@ public class SettingsComandExecutor implements CommandExecutor {
                 boolean thunder = value.equalsIgnoreCase("true");
                 plugin.getSettings().setThunder(group, thunder);
                 
-                sender.sendMessage(ChatColor.GOLD + "During thunder lanterns of group " + ChatColor.GRAY + "'" + group + "'" + ChatColor.GOLD + (thunder ? "will" : "won't") + " toggle");
+                sender.sendMessage(ChatColor.GOLD + "During thunder lanterns of group " + ChatColor.GRAY + "'" + group + "' " + ChatColor.GOLD + (thunder ? "will" : "won't") + " toggle");
                 return true;
             }
         } catch (NumberFormatException e) {
