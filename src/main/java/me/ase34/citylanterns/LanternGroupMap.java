@@ -13,7 +13,7 @@ public class LanternGroupMap extends AbstractMap<String, LanternGroup> {
         this.defaultGroup = null;
         this.delegate = new HashMap<String, LanternGroup>();
     }
-    
+
     public LanternGroupMap(LanternGroup defaultGroup) {
         this.defaultGroup = defaultGroup;
         this.delegate = new HashMap<String, LanternGroup>();
@@ -27,14 +27,14 @@ public class LanternGroupMap extends AbstractMap<String, LanternGroup> {
     @Override
     public LanternGroup get(Object key) {
         LanternGroup group = super.get(key);
-        
+
         if (group == null) {
             group = defaultGroup;
             group.setName((String) key);
-            
+
             put((String) key, group);
         }
-        
+
         return group;
     }
 
@@ -50,5 +50,5 @@ public class LanternGroupMap extends AbstractMap<String, LanternGroup> {
     public void setDefaultGroup(LanternGroup defaultGroup) {
         this.defaultGroup = defaultGroup;
     }
-    
+
 }

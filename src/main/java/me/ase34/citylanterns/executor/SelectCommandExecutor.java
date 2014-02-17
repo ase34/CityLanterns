@@ -35,13 +35,13 @@ public class SelectCommandExecutor implements CommandExecutor {
             sender.sendMessage("This command can only be used as a player!");
             return true;
         }
-        
+
         String group = (args.length < 1) ? "main" : args[0];
         boolean worldedit = (args.length < 2) ? false : args[1].equalsIgnoreCase("we");
         boolean override = (args.length < 2) ? true : !args[1].equalsIgnoreCase("new");
-        
+
         Player player = (Player) sender;
-        
+
         if (worldedit) {
             addLanternsInRegion(player, group);
         } else {
@@ -51,13 +51,12 @@ public class SelectCommandExecutor implements CommandExecutor {
     }
 
     private void addLanternsInRegion(Player player, String group) {
-        WorldEditPlugin worldEdit = (WorldEditPlugin) Bukkit.getServer()
-                .getPluginManager().getPlugin("WorldEdit");
+        WorldEditPlugin worldEdit = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
         if (worldEdit == null) {
             player.sendMessage(ChatColor.RED + "WorldEdit seems not to be enabled on this server!");
             return;
         }
-        
+
         Selection selection = worldEdit.getSelection(player);
         if (selection != null) {
             if (!(selection instanceof CuboidSelection)) {
@@ -65,7 +64,7 @@ public class SelectCommandExecutor implements CommandExecutor {
                 return;
             }
             int affected = 0;
-            
+
             Location min = selection.getMinimumPoint();
             Location max = selection.getMaximumPoint();
 
@@ -98,17 +97,17 @@ public class SelectCommandExecutor implements CommandExecutor {
                     }
                 }
             }
-            player.sendMessage(ChatColor.WHITE + String.valueOf(affected) + ChatColor.GOLD + " lanterns were added to group "
-                    + ChatColor.GRAY + group + ChatColor.GOLD + "!");
+            player.sendMessage(ChatColor.WHITE + String.valueOf(affected) + ChatColor.GOLD
+                    + " lanterns were added to group " + ChatColor.GRAY + group + ChatColor.GOLD + "!");
         } else {
-            player.sendMessage(ChatColor.RED +  "You didn't have selected anything!");
+            player.sendMessage(ChatColor.RED + "You didn't have selected anything!");
         }
     }
 
     private void giveSelectionItem(Player player, String group, boolean override) {
         ItemStack tool = constructSelectionTool(group);
         ItemStack selected = player.getItemInHand();
-        
+
         if (selected == null || selected.getAmount() == 0) {
             player.setItemInHand(tool);
         } else if (isSelectionTool(selected) && override) {
@@ -130,28 +129,27 @@ public class SelectCommandExecutor implements CommandExecutor {
                     + "inventory for the selection tool!");
         }
     }
-    
+
     private ItemStack constructSelectionTool(String group) {
         ItemStack stack = new ItemStack(Material.WOOD_PICKAXE);
-        
+
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName("Lantern Selection Tool for group '" + group + "'");
-        meta.setLore(Arrays.asList("Left-click to add/remove lantern", 
-                "Right-click to get current state of lantern"));
+        meta.setLore(Arrays.asList("Left-click to add/remove lantern", "Right-click to get current state of lantern"));
         stack.setItemMeta(meta);
-        
+
         return stack;
     }
-    
+
     private boolean isSelectionTool(ItemStack tool) {
         if (tool.getType() != Material.WOOD_PICKAXE) {
             return false;
         }
-        
+
         if (!tool.getItemMeta().getDisplayName().matches("Lantern Selection Tool for group '[^']+'")) {
             return false;
         }
-        
+
         return true;
     }
 

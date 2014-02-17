@@ -22,7 +22,7 @@ import org.bukkit.World;
 public class LanternFileStorage implements LanternStorage {
 
     public static final String magicNumber = "CL1";
-    
+
     private File file;
 
     public LanternFileStorage(File file) {
@@ -31,16 +31,16 @@ public class LanternFileStorage implements LanternStorage {
 
     public void save(LocationToLanternMap lanterns) throws Exception {
         file.createNewFile();
-        
+
         FileOutputStream fos = new FileOutputStream(file);
         DataOutputStream dos = new DataOutputStream(fos);
-        
-        dos.write(magicNumber.getBytes()); 
-        
+
+        dos.write(magicNumber.getBytes());
+
         Map<String, List<Lantern>> groups = mapToGroup(lanterns);
-        for (String group: groups.keySet()) {
+        for (String group : groups.keySet()) {
             dos.writeUTF(group);
-            
+
             Map<UUID, List<Location>> worlds = mapToWorld(lanterns);
             dos.writeInt(worlds.size());
             for (UUID uid : worlds.keySet()) {
@@ -57,10 +57,10 @@ public class LanternFileStorage implements LanternStorage {
         dos.close();
         fos.close();
     }
-    
+
     private Map<UUID, List<Location>> mapToWorld(List<Lantern> lanterns) {
         Map<UUID, List<Location>> map = new HashMap<UUID, List<Location>>();
-        for (Lantern lantern: lanterns) {
+        for (Lantern lantern : lanterns) {
             Location loc = lantern.getLocation();
             UUID uid = loc.getWorld().getUID();
             if (!map.containsKey(uid)) {
@@ -70,10 +70,10 @@ public class LanternFileStorage implements LanternStorage {
         }
         return map;
     }
-    
+
     private Map<String, List<Lantern>> mapToGroup(List<Lantern> lanterns) {
         Map<String, List<Lantern>> map = new HashMap<String, List<Lantern>>();
-        for (Lantern lantern: lanterns) {
+        for (Lantern lantern : lanterns) {
             String group = lantern.getGroup();
             if (!map.containsKey(group)) {
                 map.put(group, new ArrayList<Lantern>());
@@ -85,24 +85,24 @@ public class LanternFileStorage implements LanternStorage {
 
     public LocationToLanternMap load() throws Exception {
         file.createNewFile();
-        
+
         LocationToLanternMap lanterns = new LocationToLanternMap();
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
         DataInputStream dis = new DataInputStream(bis);
-        
+
         boolean skipFirst = false;
         dis.mark(4);
         if (dis.available() >= 3) {
             byte[] chars = new byte[3];
             dis.read(chars);
-            
+
             if (!new String(chars).equals(magicNumber)) {
                 skipFirst = true;
                 dis.reset();
             }
         }
-        
+
         while (dis.available() > 0) {
             String group;
             int worlds;
@@ -113,14 +113,14 @@ public class LanternFileStorage implements LanternStorage {
                 group = "main";
                 worlds = 1;
             }
-            
+
             for (int i = 0; i < worlds; i++) {
                 long msbs = dis.readLong();
                 long lsbs = dis.readLong();
                 UUID uid = new UUID(msbs, lsbs);
                 int locs = dis.readInt();
                 World world = Bukkit.getWorld(uid);
-                
+
                 for (int j = 0; j < locs; j++) {
                     int x = dis.readInt();
                     int y = dis.readInt();
@@ -129,7 +129,7 @@ public class LanternFileStorage implements LanternStorage {
                 }
             }
         }
-        
+
         dis.close();
         fis.close();
         return lanterns;

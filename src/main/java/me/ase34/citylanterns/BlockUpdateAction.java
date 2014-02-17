@@ -11,7 +11,7 @@ public class BlockUpdateAction {
 
     private Location blockLocation;
     private Material newBlockMaterial;
-    
+
     public BlockUpdateAction(Location blockLocation, Material newBlockMaterial) {
         super();
         this.blockLocation = blockLocation;
@@ -21,16 +21,16 @@ public class BlockUpdateAction {
     public Location getBlockLocation() {
         return blockLocation;
     }
-    
+
     public Material getNewBlockMaterial() {
         return newBlockMaterial;
     }
-    
+
     public void execute() {
         int x = blockLocation.getBlockX();
         int y = blockLocation.getBlockY();
         int z = blockLocation.getBlockZ();
-        
+
         World w = ((CraftWorld) blockLocation.getWorld()).getHandle();
         w.setTypeAndData(x, y, z, CraftMagicNumbers.getBlock(newBlockMaterial), 0, 2);
     }
@@ -43,6 +43,5 @@ public class BlockUpdateAction {
         }
         return false;
     }
-    
-    
+
 }

@@ -7,7 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
 public class LanternsSettings {
-    
+
     private Plugin plugin;
     private long lastModified = 0;
 
@@ -18,25 +18,25 @@ public class LanternsSettings {
     public long getDaytime(String group) {
         return getSection(group).getLong("day_time");
     }
-    
+
     public long getNighttime(String group) {
         return getSection(group).getLong("night_time");
     }
-    
+
     public boolean onThunder(String group) {
         return getSection(group).getBoolean("lamps_on_thundering");
     }
-    
+
     public void setDaytime(String group, long daytime) {
         getSection(group).set("day_time", daytime);
         plugin.saveConfig();
     }
-    
+
     public void setNighttime(String group, long daytime) {
         getSection(group).set("night_time", daytime);
         plugin.saveConfig();
     }
-    
+
     public void setThunder(String group, boolean thunder) {
         getSection(group).set("lamps_on_thundering", thunder);
         plugin.saveConfig();
@@ -44,7 +44,7 @@ public class LanternsSettings {
 
     private ConfigurationSection getSection(String group) {
         Configuration config = getConfig();
-        
+
         ConfigurationSection section = config.getConfigurationSection("groups." + group);
         if (section == null) {
             section = config.createSection("groups." + group);
@@ -63,8 +63,8 @@ public class LanternsSettings {
             this.lastModified = lastModified;
             plugin.reloadConfig();
         }
-        
+
         return plugin.getConfig();
     }
-    
+
 }

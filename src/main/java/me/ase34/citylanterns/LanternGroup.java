@@ -6,42 +6,42 @@ public class LanternGroup {
     private long daytime;
     private long nighttime;
     private boolean thunder;
-    
+
     public LanternGroup(String name, long daytime, long nighttime, boolean thunder) {
         this.name = name;
         this.daytime = daytime;
         this.nighttime = nighttime;
         this.thunder = thunder;
     }
-        
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public long getDaytime() {
         return daytime;
     }
-    
+
     public void setDaytime(long daytime) {
         this.daytime = daytime;
     }
-    
+
     public long getNighttime() {
         return nighttime;
     }
-    
+
     public void setNighttime(long nighttime) {
         this.nighttime = nighttime;
     }
-    
+
     public boolean isThunder() {
         return thunder;
     }
-    
+
     public void setThunder(boolean thunder) {
         this.thunder = thunder;
     }
@@ -87,5 +87,5 @@ public class LanternGroup {
         }
         return true;
     }
-    
+
 }

@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 public class ReloadCommandExecutor implements CommandExecutor {
 
     private CityLanterns plugin;
-    
+
     public ReloadCommandExecutor(CityLanterns plugin) {
         this.plugin = plugin;
     }
@@ -18,13 +18,13 @@ public class ReloadCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         boolean force = args.length > 0 ? args[0].equalsIgnoreCase("force") : false;
-        
+
         try {
             if (!force) {
                 plugin.saveLanters();
                 plugin.saveGroups();
             }
-            
+
             plugin.loadLanterns();
             plugin.loadGroups();
             if (force) {
@@ -35,7 +35,7 @@ public class ReloadCommandExecutor implements CommandExecutor {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
         return true;
     }
 

@@ -6,12 +6,12 @@ import me.ase34.citylanterns.CityLanterns;
 public class LanternBlockUpdateActionThread implements Runnable {
 
     private CityLanterns plugin;
-    
+
     public LanternBlockUpdateActionThread(CityLanterns plugin) {
         super();
         this.plugin = plugin;
     }
-    
+
     @Override
     public void run() {
         BlockUpdateAction action = plugin.getBlockUpdateQueue().poll();

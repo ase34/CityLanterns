@@ -27,13 +27,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
 public class CityLanterns extends JavaPlugin {
-    
+
     private LocationToLanternMap lanterns;
     private LanternGroupMap groups;
-    
+
     private LanternStorage lanternStorage;
     private GroupStorage groupStorage;
-    
+
     private PriorityQueue<BlockUpdateAction> blockUpdateQueue;
 
     @Override
@@ -70,7 +70,7 @@ public class CityLanterns extends JavaPlugin {
 
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternUpdateThread(this), 0, 1);
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new LanternBlockUpdateActionThread(this), 0,
-                    getConfig().getInt("toggle_delay"));
+                getConfig().getInt("toggle_delay"));
 
             try {
                 Metrics metrics = new Metrics(this);
@@ -95,19 +95,19 @@ public class CityLanterns extends JavaPlugin {
 
     public void loadLanterns() throws Exception {
         setupLanternStorage();
-        
+
         lanterns = lanternStorage.load();
     }
-    
+
     public void saveLanters() throws Exception {
         setupLanternStorage();
-        
+
         lanternStorage.save(lanterns);
     }
 
     private void setupLanternStorage() {
         reloadConfig();
-        
+
         String storageType = getConfig().getString("lanternsstorage.type");
         if (storageType.equalsIgnoreCase("file")) {
             File storageFile = new File(getDataFolder(), getConfig().getString("lanternsstorage.filepath"));
@@ -121,30 +121,31 @@ public class CityLanterns extends JavaPlugin {
             String table = getConfig().getString("lanternsstorage.mysqltable");
             lanternStorage = new LanternMySQLStorage(url, table);
         } else {
-            throw new IllegalArgumentException(String.format("The lantern storage type '%s' is not supported!", storageType));
+            throw new IllegalArgumentException(String.format("The lantern storage type '%s' is not supported!",
+                storageType));
         }
     }
-    
+
     public void loadGroups() throws Exception {
         setupGroupStorage();
-        
+
         groups = groupStorage.load();
-        
+
         long daytime = getConfig().getLong("day_time");
         long nighttime = getConfig().getLong("night_time");
         boolean thunder = getConfig().getBoolean("lamps_on_thundering");
         groups.setDefaultGroup(new LanternGroup(null, daytime, nighttime, thunder));
     }
-    
+
     public void saveGroups() throws Exception {
         setupGroupStorage();
-        
+
         groupStorage.save(groups);
     }
 
     private void setupGroupStorage() {
         reloadConfig();
-        
+
         String storageType = getConfig().getString("groupsstorage.type");
         if (storageType.equalsIgnoreCase("file")) {
             File storageFile = new File(getDataFolder(), getConfig().getString("groupsstorage.filepath"));
@@ -158,13 +159,13 @@ public class CityLanterns extends JavaPlugin {
             String table = getConfig().getString("groupsstorage.mysqltable");
             groupStorage = new GroupMySQLStorage(url, table);
         } else {
-            throw new IllegalArgumentException(String.format("The group storage type '%s' is not supported!", storageType));
+            throw new IllegalArgumentException(String.format("The group storage type '%s' is not supported!",
+                storageType));
         }
     }
 
     public LanternGroupMap getGroups() {
         return groups;
     }
-
 
 }

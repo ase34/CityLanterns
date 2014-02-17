@@ -4,15 +4,15 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 public class Lantern {
-    
+
     private Location lantern;
     private String group;
-    
+
     public Lantern(Location lantern, String group) {
         this.lantern = lantern;
         this.group = group;
     }
-    
+
     public Lantern(Location lantern) {
         this(lantern, "main");
     }
@@ -62,6 +62,5 @@ public class Lantern {
     public void setGroup(String group) {
         this.group = group;
     }
-    
-    
+
 }
