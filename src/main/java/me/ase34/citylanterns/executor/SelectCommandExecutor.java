@@ -38,13 +38,14 @@ public class SelectCommandExecutor implements CommandExecutor {
         
         String group = (args.length < 1) ? "main" : args[0];
         boolean worldedit = (args.length < 2) ? false : args[1].equalsIgnoreCase("we");
+        boolean override = (args.length < 2) ? true : !args[1].equalsIgnoreCase("new");
         
         Player player = (Player) sender;
         
         if (worldedit) {
             addLanternsInRegion(player, group);
         } else {
-            giveSelectionItem(player, group);
+            giveSelectionItem(player, group, override);
         }
         return true;
     }
@@ -104,11 +105,13 @@ public class SelectCommandExecutor implements CommandExecutor {
         }
     }
 
-    private void giveSelectionItem(Player player, String group) {
+    private void giveSelectionItem(Player player, String group, boolean override) {
         ItemStack tool = constructSelectionTool(group);
         ItemStack selected = player.getItemInHand();
         
         if (selected == null || selected.getAmount() == 0) {
+            player.setItemInHand(tool);
+        } else if (isSelectionTool(selected) && override) {
             player.setItemInHand(tool);
         } else {
             for (int i = 0; i < player.getInventory().getSize(); i++) {
@@ -138,6 +141,18 @@ public class SelectCommandExecutor implements CommandExecutor {
         stack.setItemMeta(meta);
         
         return stack;
+    }
+    
+    private boolean isSelectionTool(ItemStack tool) {
+        if (tool.getType() != Material.WOOD_PICKAXE) {
+            return false;
+        }
+        
+        if (!tool.getItemMeta().getDisplayName().matches("Lantern Selection Tool for group '[^']+'")) {
+            return false;
+        }
+        
+        return true;
     }
 
 }

@@ -18,15 +18,25 @@ Commands & Permissions
 The following commands are available:
 
 <dl>
-<dt>/citylanternsselect|cls [&lt;group&gt; [we]]</dt>
+<dt>/citylanternsselect|cls [&lt;group&gt; [new|we]]</dt>
 <dd>
-<p>Will either give a tool for adding/removing lanterns to/from the group <code>&lt;group&gt;</code> (Will be set to 'main' if not supplied) or, if the <code>we</code> argument is given, sets the group of all lanterns to <code>&lt;group&gt;</code> in the currently selected <a href="http://dev.bukkit.org/bukkit-plugins/worldedit/">WorldEdit</a> region.</p>
+<p>Will either give (or replace if <code>new<code> is not given) a tool for adding/removing lanterns to/from the group <code>&lt;group&gt;</code> (Will be set to 'main' if not supplied) or, if the <code>we</code> argument is given, sets the group of all lanterns to <code>&lt;group&gt;</code> in the currently selected <a href="http://dev.bukkit.org/bukkit-plugins/worldedit/">WorldEdit</a> region.</p>
 <p>Permission name is <code>citylanterns.select</code> (default for ops)</p>
 </dd>
 <dt>/citylanternsgroups|clg [&lt;group&gt;]</dt>
 <dd>
 <p>Lists all groups or, if <code>&lt;group&gt;</code> is given, shows detailed information about that group.</p>
 <p>Permission name is <code>citylanterns.groups</code> (default for ops)</p>
+</dd>
+<dt>/citylanternssettings|clsetting [<group>] day|night|thunder <number>|true|false</dt>
+<dd>
+<p>Sets config properties for a the group <code>&lt;group&gt;</code>, or <code>main</code> if not supplied.</p>
+<p>Permission name is <code>citylanters.settings</code> (default for ops)</p>
+</dd>
+<dt>/citylanternsreload|clr [force]</dt>
+<dd>
+<p>Reloads all lanterns and group settings. If <code>force</code> is supplied, this will discard all data and load them from the storage.</p>
+<p>Permission name is <code>citylanterns.reload</code> (default for ops)</p>
 </dd>
 </dl>
 
@@ -45,18 +55,49 @@ Times:
 After 23999 ticks the counter will be reset to 0 and start counting up again.
 
 ```
-night_time: 12000 			# Default time (in ticks) for groups when lanterns will toggle on
-day_time: 0 				# Default time (in ticks) for groups when lanterns will toggle off
-lamps_on_thundering: true	# Should redstone lamps toggle on while it's thundering/raining by default?
-toggle_delay: 10			# Delay of toggling the lanterns to prevent lags, in ticks (1 second = 20 ticks)  
+# Default time (in ticks) for groups when lanterns will toggle on
+night_time: 12500
+# Default time (in ticks) for groups when lanterns will toggle off
+day_time: 23000
+# Default value for groups whether redstone lamps toggle on while it's thundering/raining
+lamps_on_thundering: true
+# Delay in ticks (1/20 seconds) between the switching of the lanterns
+toggle_delay: 10
+# Settings for the lanterns storage
+lanternsstorage:
+  # Storage type, either 'file', 'sqlite' or 'mysql'
+  type: file
+  # Path for file if storage type is 'file'
+  filepath: storage.txt
+  # Path for sqlite file if storage type is 'sqlite'
+  sqlitepath: storage.db
+  # Table to save lanterns for sqlite database
+  sqlitetable: lanterns
+  # URI for mysql database if storage type is 'mysql'
+  mysqlurl: jdbc:mysql://localhost:3306/citylanterns?user=username&password=secret
+  # Table to save lanterns for mysql database
+  mysqltable: lanterns
+groupsstorage:
+  # Storage type, either 'file', 'sqlite' or 'mysql'
+  type: file
+  # Path for file if storage type is 'file'
+  filepath: groups.yml
+  # Path for sqlite file if storage type is 'sqlite'
+  sqlitepath: storage.db
+  # Table to save groups for sqlite database
+  sqlitetable: groups
+  # URI for mysql database if storage type is 'mysql'
+  mysqlurl: jdbc:mysql://localhost:3306/citylanterns?user=username&password=secret
+  # Table to save groups for mysql database
+  mysqltable: groups
 ```
 
-File Format
+Flatfile Format
 -----------
 
-Lantern locations in the worlds are saved in `storage.txt`, found in the plugin folder. 
+File format specifications for flatfile storage type:
 *[LanternFileStorage#save()](https://github.com/ase34/CityLanterns/blob/master/src/main/java/me/ase34/citylanterns/storage/LanternFileStorage.java#L32)* 
-will fill the file with the following structure (applies to v1.9):
+will fill the file with the following structure (applies to >=v1.9):
 
 <ol>
 <li>The magic number <code>0x43 0x4C 0x31</code> (3 bytes, ASCII <em>CL1</em>)</li>

@@ -6,16 +6,18 @@ author: ase34
 softdepend: [WorldEdit] 
 commands:
   citylanternsselect:
-    aliases: cls
+    aliases: [cls, clselect]
     permission: citylanterns.select
     description: Command for selecting lanterns
     usage: |
-        /<command> [<group> [we]]
+        /<command> [<group> [new|we]]
         <group> - The group the lanterns will be added. Default is 'main'.
         §f 
         we - Set all lanterns to <group> in the WorldEdit selection.
+        §f
+        new - If item in hand is a selection tool, do not override but keep the old one.
   citylanternsgroups:
-    aliases: clg
+    aliases: [clg, clgroups]
     permission: citylanterns.groups
     description: Command for getting group settings
     usage: |
@@ -23,16 +25,27 @@ commands:
         <group> - If specified, prints deitailed information about that group. If not, a list of groups will be displayed.
   citylanternssettings:
     aliases: clsettings
-    permission: citylanters.settings
+    permission: citylanterns.settings
     description: Command for setting group settings and settings in general
     usage: |
         /<command> [<group>] day|night|thunder <value>
         <group> - The group the lanterns will be added. Default is 'main'.
         §f 
         <value> - If 'day' or 'night' then a number is expected, if 'thunder' then either 'true' or 'false' is expected. 
+  citylanternsreload:
+    aliases: [clr, clreload]
+    permission: citylanterns.reload
+    description: Reloads all lanterns and group settings
+    usage: |
+        /<command> [force]
+        <force> - If supplied, current lanterns will be removed and reloaded from the storage.
 permissions:
   citylanterns.select:
     default: op
   citylanterns.groups:
+    default: op
+  citylanterns.settings:
+    default: op
+  citylanterns.reload:
     default: op
   

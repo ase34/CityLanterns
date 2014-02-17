@@ -1,6 +1,7 @@
 package me.ase34.citylanterns.executor;
 
 import me.ase34.citylanterns.CityLanterns;
+import me.ase34.citylanterns.LanternGroup;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,32 +22,34 @@ public class SettingsComandExecutor implements CommandExecutor {
             return false;
         }
         
-        String group = "main";
+        String groupname = "main";
         if (args.length == 3) {
-            group = args[0];
+            groupname = args[0];
         }
         
         String variable = args[args.length - 2];
         String value = args[args.length - 1];
         
+        LanternGroup group = plugin.getGroups().get(groupname);
+        
         try {
             if (variable.equalsIgnoreCase("day")) {
                 int time = Integer.parseInt(value);
-                plugin.getSettings().setDaytime(group, time);
+                group.setDaytime(time);
                 
-                sender.sendMessage(ChatColor.GOLD + "Set daytime of group " + ChatColor.GRAY + "'" + group + "'" + ChatColor.GOLD + " to " + ChatColor.WHITE + time);
+                sender.sendMessage(ChatColor.GOLD + "Set daytime of group " + ChatColor.GRAY + "'" + groupname + "'" + ChatColor.GOLD + " to " + ChatColor.WHITE + time);
                 return true;
             } else if (variable.equalsIgnoreCase("night")) {
                 int time = Integer.parseInt(value);
-                plugin.getSettings().setNighttime(group, time);
+                group.setNighttime(time);
                 
-                sender.sendMessage(ChatColor.GOLD + "Set nighttime of group " + ChatColor.GRAY + "'" + group + "'" + ChatColor.GOLD + " to " + ChatColor.WHITE + time);
+                sender.sendMessage(ChatColor.GOLD + "Set nighttime of group " + ChatColor.GRAY + "'" + groupname + "'" + ChatColor.GOLD + " to " + ChatColor.WHITE + time);
                 return true;
             } else if (variable.equalsIgnoreCase("thunder")) {
                 boolean thunder = value.equalsIgnoreCase("true");
-                plugin.getSettings().setThunder(group, thunder);
+                group.setThunder(thunder);
                 
-                sender.sendMessage(ChatColor.GOLD + "During thunder lanterns of group " + ChatColor.GRAY + "'" + group + "' " + ChatColor.GOLD + (thunder ? "will" : "won't") + " toggle");
+                sender.sendMessage(ChatColor.GOLD + "During thunder lanterns of group " + ChatColor.GRAY + "'" + groupname + "' " + ChatColor.GOLD + (thunder ? "will" : "won't") + " toggle");
                 return true;
             }
         } catch (NumberFormatException e) {

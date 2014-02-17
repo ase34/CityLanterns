@@ -3,6 +3,7 @@ package me.ase34.citylanterns.runnable;
 import me.ase34.citylanterns.BlockUpdateAction;
 import me.ase34.citylanterns.CityLanterns;
 import me.ase34.citylanterns.Lantern;
+import me.ase34.citylanterns.LanternGroup;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,12 +39,12 @@ public class LanternUpdateThread implements Runnable {
                 continue;
             }
             
-            String group = lantern.getGroup();
+            LanternGroup group = plugin.getGroups().get(lantern.getGroup());
             long time = loc.getWorld().getTime() % 24000;
-            long nighttime = plugin.getSettings().getNighttime(group);
-            long daytime = plugin.getSettings().getDaytime(group);
+            long nighttime = group.getNighttime();
+            long daytime = group.getDaytime();
             
-            if (loc.getWorld().hasStorm() && plugin.getSettings().onThunder(group)) {
+            if (loc.getWorld().hasStorm() && group.isThunder()) {
                 addUpdateAction(block, true);
                 return;
             }

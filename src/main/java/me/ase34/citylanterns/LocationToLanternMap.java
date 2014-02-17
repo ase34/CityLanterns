@@ -9,12 +9,12 @@ import org.bukkit.Location;
 
 public class LocationToLanternMap extends AbstractList<Lantern> {
     
-    private ArrayList<Lantern> container = new ArrayList<Lantern>();
+    private ArrayList<Lantern> delegate = new ArrayList<Lantern>();
 
     @Override
     public Lantern set(int index, Lantern element) {
         checkInsert(index, element);
-        return container.set(index, element);
+        return delegate.set(index, element);
     }
 
     public void checkInsert(int index, Lantern element) {
@@ -29,7 +29,7 @@ public class LocationToLanternMap extends AbstractList<Lantern> {
     @Override
     public void add(int index, Lantern element) {
         checkInsert(index, element);
-        container.add(index, element);
+        delegate.add(index, element);
     }
 
     public Lantern getLantern(Location loc) {
@@ -61,17 +61,17 @@ public class LocationToLanternMap extends AbstractList<Lantern> {
 
     @Override
     public Lantern get(int index) {
-        return container.get(index);
+        return delegate.get(index);
     }
 
     @Override
     public int size() {
-        return container.size();
+        return delegate.size();
     }
 
     @Override
     public Lantern remove(int index) {
-        return container.remove(index);
+        return delegate.remove(index);
     }
     
 }

@@ -17,7 +17,7 @@ public class WorldListener implements Listener {
     @EventHandler
     public void onLoadWorld(WorldLoadEvent ev) throws Exception {
         plugin.getLogger().info("World '" + ev.getWorld().getName() + "' loaded! Reloading lanterns");
-        plugin.reloadLanterns();
+        plugin.loadLanterns();
     }
     
 }

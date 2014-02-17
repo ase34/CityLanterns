@@ -1,5 +1,19 @@
 # For config, please see https://github.com/ase34/CityLanterns
-night_time: 12000
-day_time: 0
+night_time: 12500
+day_time: 23000
 lamps_on_thundering: true
-toggle_delay: 10
+toggle_delay: 5
+lanternsstorage:
+  type: file
+  filepath: storage.txt
+  sqlitepath: storage.db
+  sqlitetable: lanterns
+  mysqlurl: jdbc:mysql://localhost:3306/citylanterns?user=username&password=secret
+  mysqltable: lanterns
+groupsstorage:
+  type: file
+  filepath: groups.yml
+  sqlitepath: storage.db
+  sqlitetable: groups
+  mysqlurl: jdbc:mysql://localhost:3306/citylanterns?user=username&password=secret
+  mysqltable: groups

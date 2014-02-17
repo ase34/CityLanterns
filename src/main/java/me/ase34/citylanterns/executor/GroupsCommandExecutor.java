@@ -1,6 +1,7 @@
 package me.ase34.citylanterns.executor;
 
 import me.ase34.citylanterns.CityLanterns;
+import me.ase34.citylanterns.LanternGroup;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -26,14 +27,16 @@ public class GroupsCommandExecutor implements CommandExecutor {
         return true;
     }
 
-    private void showDetails(CommandSender sender, String group) {
-        int size = plugin.getLanterns().getLanterns(group).size();
-        long daytime = plugin.getSettings().getDaytime(group);
-        long nighttime = plugin.getSettings().getNighttime(group);
-        boolean thunder = plugin.getSettings().onThunder(group);
+    private void showDetails(CommandSender sender, String groupnname) {
+        int size = plugin.getLanterns().getLanterns(groupnname).size();
+        
+        LanternGroup group = plugin.getGroups().get(groupnname);
+        long daytime = group.getDaytime();
+        long nighttime = group.getNighttime();
+        boolean thunder = group.isThunder();
         
         sender.sendMessage(ChatColor.GOLD + "Group " + ChatColor.GRAY + 
-                group + ChatColor.GOLD + ": ");
+                groupnname + ChatColor.GOLD + ": ");
         sender.sendMessage(ChatColor.GOLD + "Count - " + ChatColor.WHITE + size);
         sender.sendMessage(ChatColor.GOLD + "Daytime - " + ChatColor.WHITE + daytime);
         sender.sendMessage(ChatColor.GOLD + "Nighttime - " + ChatColor.WHITE + nighttime);

@@ -30,6 +30,8 @@ public class LanternFileStorage implements LanternStorage {
     }
 
     public void save(LocationToLanternMap lanterns) throws Exception {
+        file.createNewFile();
+        
         FileOutputStream fos = new FileOutputStream(file);
         DataOutputStream dos = new DataOutputStream(fos);
         
@@ -82,6 +84,8 @@ public class LanternFileStorage implements LanternStorage {
     }
 
     public LocationToLanternMap load() throws Exception {
+        file.createNewFile();
+        
         LocationToLanternMap lanterns = new LocationToLanternMap();
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
