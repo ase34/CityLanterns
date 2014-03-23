@@ -28,7 +28,7 @@ The following commands are available:
 <p>Lists all groups or, if <code>&lt;group&gt;</code> is given, shows detailed information about that group.</p>
 <p>Permission name is <code>citylanterns.groups</code> (default for ops)</p>
 </dd>
-<dt>/citylanternssettings|clsetting [<group>] day|night|thunder <number>|true|false</dt>
+<dt>/citylanternssettings|clsetting [&lt;group&gt;] day|night|thunder &lt;number&gt;|true|false</dt>
 <dd>
 <p>Sets config properties for a the group <code>&lt;group&gt;</code>, or <code>main</code> if not supplied.</p>
 <p>Permission name is <code>citylanters.settings</code> (default for ops)</p>
