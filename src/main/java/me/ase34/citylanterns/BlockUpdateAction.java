@@ -1,11 +1,11 @@
 package me.ase34.citylanterns;
 
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R3.World;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R1.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R3.util.CraftMagicNumbers;
 
 public class BlockUpdateAction {
 
