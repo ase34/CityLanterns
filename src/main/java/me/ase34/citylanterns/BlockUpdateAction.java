@@ -1,11 +1,7 @@
 package me.ase34.citylanterns;
 
-import net.minecraft.server.v1_7_R3.World;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R3.util.CraftMagicNumbers;
 
 public class BlockUpdateAction {
 
@@ -27,12 +23,7 @@ public class BlockUpdateAction {
     }
 
     public void execute() {
-        int x = blockLocation.getBlockX();
-        int y = blockLocation.getBlockY();
-        int z = blockLocation.getBlockZ();
-
-        World w = ((CraftWorld) blockLocation.getWorld()).getHandle();
-        w.setTypeAndData(x, y, z, CraftMagicNumbers.getBlock(newBlockMaterial), 0, 2);
+        blockLocation.getWorld().getBlockAt(blockLocation).setType(newBlockMaterial);
     }
 
     @Override
