@@ -1,5 +1,7 @@
 package me.ase34.citylanterns;
 
+import org.bukkit.World;
+
 public class LanternGroup {
 
     private String name;
@@ -44,6 +46,22 @@ public class LanternGroup {
 
     public void setThunder(boolean thunder) {
         this.thunder = thunder;
+    }
+
+    public boolean computeState(World world) {
+        long time = world.getTime() % 24000;
+
+        if (thunder && world.hasStorm()) {
+            return true;
+        }
+
+        if (daytime < nighttime) {
+            return (time < daytime || nighttime <= time);
+        } else if (nighttime < daytime) {
+            return (nighttime <= time && time < daytime);
+        } else {
+            return false;
+        }
     }
 
     @Override
